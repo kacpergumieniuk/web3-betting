@@ -9,7 +9,6 @@ const Home: NextPage = () => {
     return (
         <>
             <Navbar setCurrentTab={setCurrentTab} currentTab={currentTab} />
-            <p>{currentTab}</p>
         </>
     )
 }
