@@ -8,7 +8,7 @@ interface NavbarInterface {
 
 const Navbar = ({ setCurrentTab, currentTab }: NavbarInterface) => {
     return (
-        <div className="w-full h-20 bg-violet-500 text-white flex items-center px-6 leading-none justify-between">
+        <div className="w-full h-20 bg-violet-500 text-white flex items-center px-6 leading-none justify-between static">
             <div className="flex h-full items-center">
                 <h1 className="text-2xl font-bold mr-16">web-3 bets</h1>
                 <div
