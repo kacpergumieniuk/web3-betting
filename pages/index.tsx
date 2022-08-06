@@ -5,21 +5,25 @@ import Navbar from '../components/Navbar'
 import { useState, useEffect } from 'react'
 import BetTab from '../components/BetTab'
 import TicketTab from '../components/TicketTab'
+import { useEthers } from '@usedapp/core'
 
 const Home: NextPage = () => {
     const [currentTab, setCurrentTab] = useState<string>('bets')
     const [bets, setBets] = useState<Array<any>>([])
     const [chosenBets, setChosenBets] = useState<Array<any>>([])
+    const {error} = useEthers()
 
     useEffect(() => {
+        
         fetch('http://localhost:3000/api/bets')
             .then((res) => res.json())
             .then((data) => setBets(data.results))
+            console.log(error)
     }, [])
     return (
-        <div className=" bg-zinc-200 w-screen">
+        <div className=" bg-zinc-200">
             <Navbar setCurrentTab={setCurrentTab} currentTab={currentTab} />
-            <div className="flex w-screen">
+            <div className="flex pt-16">
                 <TicketTab />
                 <div className="flex-col flex basis-1/2 mt-8">
                     {bets.map((bet: any, key) => (

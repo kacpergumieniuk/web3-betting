@@ -27,7 +27,8 @@ const TicketTab = ({ chosenBets }: TicketTabInterface) => {
                     <p>Kurs: {bet.odds}</p>
                 </div>
             ))}
-            {totalCourse}
+            {totalCourse > 1  && <p className='px-2 mt-4 text-gray-500 font-bold text-sm'>Kurs <span className='text-black text-md p-2 bg-secondary font-bold rounded-lg'>{totalCourse.toFixed(2)}</span></p>}
+            
         </div>
     )
 }
