@@ -1,15 +1,7 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import BetTabButton from './BetTabButton'
+import { BetTabInterface } from '../common/types'
 
-interface BetTabInterface {
-    team1: string
-    team2: string
-    odds1: number
-    odds2: number
-    draw: number
-    id: number
-    setChosenBets: (value: any) => void
-}
 const BetTab = ({
     team1,
     team2,
@@ -18,7 +10,16 @@ const BetTab = ({
     draw,
     id,
     setChosenBets,
+    chosenBets,
 }: BetTabInterface) => {
+    useEffect(() => {
+        chosenBets.filter((bet) => bet.id === id).length > 0
+            ? setIsTabChosen(true)
+            : setIsTabChosen(false)
+    }, [chosenBets])
+
+    const [isTabChosen, setIsTabChosen] = useState<boolean>(false)
+
     return (
         <div className="flex px-4 my-3 py-6 bg-white rounded-lg justify-between items-center">
             <p className="font-bold">
@@ -32,19 +33,17 @@ const BetTab = ({
                     id={id}
                     setChosenBets={setChosenBets}
                     winner={team1}
+                    disabled={isTabChosen}
                 />
-                <div
-                    className="bg-secondary mx-2 text-center px-4 py-1 rounded-lg cursor-pointer hover:bg-secondary-hover transition flex flex-col justify-between"
-                    onClick={() =>
-                        setChosenBets((prev: any) => [
-                            ...prev,
-                            { team: team1, odds: odds1, id: id },
-                        ])
-                    }
-                >
-                    <p className="text-sm">Remis</p>
-                    <p className=" font-bold">{draw}</p>
-                </div>
+                <BetTabButton
+                    team1={team1}
+                    team2={team2}
+                    odds={draw}
+                    id={id}
+                    setChosenBets={setChosenBets}
+                    winner={'Remis'}
+                    disabled={isTabChosen}
+                />
                 <BetTabButton
                     team1={team1}
                     team2={team2}
@@ -52,6 +51,7 @@ const BetTab = ({
                     id={id}
                     setChosenBets={setChosenBets}
                     winner={team2}
+                    disabled={isTabChosen}
                 />
             </div>
         </div>

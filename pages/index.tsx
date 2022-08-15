@@ -6,11 +6,12 @@ import { useState, useEffect } from 'react'
 import BetTab from '../components/BetTab'
 import TicketTab from '../components/TicketTab'
 import { useEthers } from '@usedapp/core'
+import { ChosenBetsInterface, BetsInterface } from '../common/types'
 
 const Home: NextPage = () => {
     const [currentTab, setCurrentTab] = useState<string>('bets')
-    const [bets, setBets] = useState<Array<any>>([])
-    const [chosenBets, setChosenBets] = useState<Array<any>>([])
+    const [bets, setBets] = useState<Array<BetsInterface>>([])
+    const [chosenBets, setChosenBets] = useState<Array<ChosenBetsInterface>>([])
     const { error } = useEthers()
 
     useEffect(() => {
@@ -25,7 +26,7 @@ const Home: NextPage = () => {
             <div className="flex pt-16">
                 <TicketTab />
                 <div className="flex-col flex basis-1/2 mt-8">
-                    {bets.map((bet: any, key) => (
+                    {bets.map((bet: BetsInterface, key) => (
                         <BetTab
                             team1={bet.team1}
                             team2={bet.team2}
@@ -35,6 +36,7 @@ const Home: NextPage = () => {
                             id={bet.id}
                             setChosenBets={setChosenBets}
                             key={key}
+                            chosenBets={chosenBets}
                         />
                     ))}
                 </div>

@@ -1,12 +1,16 @@
 import { useEffect, useState } from 'react'
-
-interface TicketTabInterface {
-    chosenBets?: Array<any>
-    setChosenBets?: (value: any) => void
-}
+import { TicketTabInterface } from '../common/types'
 
 const TicketTab = ({ chosenBets, setChosenBets }: TicketTabInterface) => {
     const [totalCourse, setTotalCourse] = useState<number>(1)
+
+    const [stakeValue, setStakeValue] = useState<number>(0)
+    const [estimatedWin, setEstimatedWin] = useState<number>(0)
+
+    useEffect(() => {
+        stakeValue > 0 && setEstimatedWin(stakeValue * totalCourse)
+    }, [stakeValue, chosenBets])
+
     useEffect(() => {
         setTotalCourse(1)
         chosenBets?.map((bet) => {
@@ -41,12 +45,30 @@ const TicketTab = ({ chosenBets, setChosenBets }: TicketTabInterface) => {
                 </div>
             ))}
             {totalCourse > 1 && (
-                <p className="px-2 mt-4 text-gray-500 font-bold text-sm">
-                    Kurs{' '}
-                    <span className="text-black text-md p-2 bg-secondary font-bold rounded-lg">
-                        {totalCourse.toFixed(2)}
-                    </span>
-                </p>
+                <>
+                    <div className="flex justify-between items-center px-3 flex-wrap mt-5 mb-2">
+                        <p className="text-gray-500 font-bold text-sm">
+                            Kurs{' '}
+                            <span className="text-black text-md p-2 bg-secondary font-bold rounded-lg">
+                                {totalCourse.toFixed(2)}
+                            </span>
+                        </p>
+                        <input
+                            type="text"
+                            className="rounded-md py-2 border border-black w-2/5 font-bold px-2"
+                            onChange={(e) =>
+                                setStakeValue(parseInt(e.target.value))
+                            }
+                            value={stakeValue}
+                        />
+                    </div>
+                    <div className="flex justify-between items-center px-3">
+                        <p className="text-sm">Ewentualna wygrana:</p>
+                        <p className="text-secondary font-bold">
+                            {estimatedWin.toFixed(2)} zł
+                        </p>
+                    </div>
+                </>
             )}
         </div>
     )
