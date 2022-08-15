@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import BetTabButton from './BetTabButton'
-import { BetTabInterface } from '../common/types'
+import { BetTabInterface } from '../../../common/types'
 
 const BetTab = ({
     team1,

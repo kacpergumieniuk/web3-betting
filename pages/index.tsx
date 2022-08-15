@@ -1,10 +1,10 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
-import Navbar from '../components/Navbar'
+import Navbar from '../components/MainView/Navbar/Navbar'
 import { useState, useEffect } from 'react'
-import BetTab from '../components/BetTab'
-import TicketTab from '../components/TicketTab'
+import BetTab from '../components/MainView/BetTab/BetTab'
+import TicketTab from '../components/MainView/TicketTab'
 import { useEthers } from '@usedapp/core'
 import { ChosenBetsInterface, BetsInterface } from '../common/types'
 

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { TicketTabInterface } from '../common/types'
+import { TicketTabInterface } from '../../common/types'
 
 const TicketTab = ({ chosenBets, setChosenBets }: TicketTabInterface) => {
     const [totalCourse, setTotalCourse] = useState<number>(1)
