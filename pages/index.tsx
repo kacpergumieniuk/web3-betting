@@ -11,14 +11,13 @@ const Home: NextPage = () => {
     const [currentTab, setCurrentTab] = useState<string>('bets')
     const [bets, setBets] = useState<Array<any>>([])
     const [chosenBets, setChosenBets] = useState<Array<any>>([])
-    const {error} = useEthers()
+    const { error } = useEthers()
 
     useEffect(() => {
-        
         fetch('http://localhost:3000/api/bets')
             .then((res) => res.json())
             .then((data) => setBets(data.results))
-            console.log(error)
+        console.log(error)
     }, [])
     return (
         <div className=" bg-zinc-200">
@@ -39,8 +38,10 @@ const Home: NextPage = () => {
                         />
                     ))}
                 </div>
-                <TicketTab chosenBets={chosenBets} />
-                {/*     <p onClick={() => console.log(chosenBets)}> LOL</p> */}
+                <TicketTab
+                    chosenBets={chosenBets}
+                    setChosenBets={setChosenBets}
+                />
             </div>
         </div>
     )

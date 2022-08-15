@@ -23,7 +23,7 @@ const BetTabButton = ({
         <>
             {type != 'draw' && (
                 <div
-                    className="bg-secondary mx-2 text-center px-4 py-1 rounded-lg cursor-pointer hover:bg-secondary-hover transition flex flex-col justify-between"
+                    className="bg-secondary mx-2 text-center w-20 py-1 rounded-lg cursor-pointer hover:bg-secondary-hover transition flex flex-col justify-between"
                     onClick={() =>
                         setChosenBets((prev: any) => [
                             ...prev,
