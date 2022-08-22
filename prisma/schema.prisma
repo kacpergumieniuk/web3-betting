@@ -9,3 +9,12 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model Bet {
+  id    String @id @default(cuid())
+  team1 String
+  team2 String
+  odds1 Int
+  odds2 Int
+  draw  Int
+}
