@@ -7,7 +7,7 @@ const ConnectButton = () => {
 
     return (
         <button
-            className="border border-white border-4 p-3 rounded-3xl font-bold text-white cursor-pointer hover:bg-white hover:text-violet-500 transition"
+            className="border border-white border-4 p-3 rounded-3xl font-bold text-white leading-none cursor-pointer hover:bg-white hover:text-violet-500 transition"
             onClick={activateBrowserWallet}
         >
             {account ? (

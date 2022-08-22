@@ -8,6 +8,7 @@ import TicketTab from '../components/MainView/TicketTab'
 import { useEthers } from '@usedapp/core'
 import { ChosenBetsInterface } from '../common/types'
 import { Bet, PrismaClient } from '@prisma/client'
+import Sidebar from '../components/MainView/Sidebar/Sidebar'
 
 const prisma = new PrismaClient()
 
@@ -24,7 +25,7 @@ const Home: NextPage = ({ betsData }: any) => {
     const [chosenBets, setChosenBets] = useState<Array<ChosenBetsInterface>>([])
 
     return (
-        <div className=" bg-zinc-200">
+        <div className=" bg-background-color">
             <Head>
                 <title>Web3 Betting</title>
                 <meta
@@ -32,10 +33,14 @@ const Home: NextPage = ({ betsData }: any) => {
                     content="initial-scale=1.0, width=device-width"
                 />
             </Head>
+            <link
+                rel="stylesheet"
+                href="https://use.typekit.net/gdr3vyw.css"
+            ></link>
             <Navbar setCurrentTab={setCurrentTab} currentTab={currentTab} />
+            <Sidebar />
             <div className="flex pt-16">
-                <TicketTab />
-                <div className="flex-col flex basis-1/2 mt-8">
+                <div className="flex-col flex basis-3/4 mt-8 pl-40">
                     {bets!.map((bet: Bet, key: any) => (
                         <BetTab
                             team1={bet.team1}

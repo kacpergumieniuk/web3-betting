@@ -28,7 +28,7 @@ const TicketTab = ({ chosenBets, setChosenBets }: TicketTabInterface) => {
         console.log(id)
     }
     return (
-        <div className="basis-1/4 bg-white mx-20 static mb-4 mt-8 rounded-lg h-screen">
+        <div className="bg-primary basis-1/4 bg-white mx-20 static mb-4 mt-8 rounded-lg h-[calc(100vh-7rem)]">
             {chosenBets?.map((bet: any, key) => (
                 <div
                     className="border rounded-md p-2 m-2"

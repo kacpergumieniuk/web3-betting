@@ -22,8 +22,8 @@ const BetTab = ({
     const [isTabChosen, setIsTabChosen] = useState<boolean>(false)
 
     return (
-        <div className="flex px-4 my-3 py-6 bg-white rounded-lg justify-between items-center">
-            <p className="font-bold">
+        <div className="flex px-4 my-3 py-6 bg-primary rounded-lg justify-between items-center">
+            <p className="font-bold text-white">
                 {team1} - {team2}
             </p>
             <div className="flex">
