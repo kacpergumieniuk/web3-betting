@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import BetTabButton from './BetTabButton'
 import { BetTabInterface } from '../../../common/types'
+import { Bet } from '@prisma/client'
 
 const BetTab = ({
     team1,

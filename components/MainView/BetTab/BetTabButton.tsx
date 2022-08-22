@@ -6,7 +6,7 @@ interface BetTabButtonInterface {
     team1: string
     team2: string
     winner?: string
-    id: number
+    id: string
     odds: number
     disabled?: boolean
 }

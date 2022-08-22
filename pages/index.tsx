@@ -6,19 +6,23 @@ import { useState, useEffect } from 'react'
 import BetTab from '../components/MainView/BetTab/BetTab'
 import TicketTab from '../components/MainView/TicketTab'
 import { useEthers } from '@usedapp/core'
-import { ChosenBetsInterface, BetsInterface } from '../common/types'
-import { Bet } from '@prisma/client'
+import { ChosenBetsInterface } from '../common/types'
+import { Bet, PrismaClient } from '@prisma/client'
 
-const Home: NextPage = () => {
+const prisma = new PrismaClient()
+
+export const getStaticProps = async () => {
+    const res = await prisma.bet.findMany()
+    return {
+        props: { betsData: res },
+    }
+}
+
+const Home: NextPage = ({ betsData }: any) => {
     const [currentTab, setCurrentTab] = useState<string>('bets')
-    const [bets, setBets] = useState<Array<BetsInterface>>([])
+    const [bets, setBets] = useState<Bet[]>(betsData)
     const [chosenBets, setChosenBets] = useState<Array<ChosenBetsInterface>>([])
-    const { error } = useEthers()
-    const axios = require('axios').default
 
-    useEffect(() => {
-        axios.get('/api/bets').then((res: any) => setBets(res.data))
-    }, [])
     return (
         <div className=" bg-zinc-200">
             <Head>
@@ -32,7 +36,7 @@ const Home: NextPage = () => {
             <div className="flex pt-16">
                 <TicketTab />
                 <div className="flex-col flex basis-1/2 mt-8">
-                    {bets!.map((bet: BetsInterface, key) => (
+                    {bets!.map((bet: Bet, key: any) => (
                         <BetTab
                             team1={bet.team1}
                             team2={bet.team2}
