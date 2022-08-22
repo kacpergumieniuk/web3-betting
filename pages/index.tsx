@@ -7,18 +7,17 @@ import BetTab from '../components/MainView/BetTab/BetTab'
 import TicketTab from '../components/MainView/TicketTab'
 import { useEthers } from '@usedapp/core'
 import { ChosenBetsInterface, BetsInterface } from '../common/types'
+import { Bet } from '@prisma/client'
 
 const Home: NextPage = () => {
     const [currentTab, setCurrentTab] = useState<string>('bets')
     const [bets, setBets] = useState<Array<BetsInterface>>([])
     const [chosenBets, setChosenBets] = useState<Array<ChosenBetsInterface>>([])
     const { error } = useEthers()
+    const axios = require('axios').default
 
     useEffect(() => {
-        fetch('http://localhost:3000/api/bets')
-            .then((res) => res.json())
-            .then((data) => setBets(data.results))
-        console.log(error)
+        axios.get('/api/bets').then((res: any) => setBets(res.data))
     }, [])
     return (
         <div className=" bg-zinc-200">
@@ -33,7 +32,7 @@ const Home: NextPage = () => {
             <div className="flex pt-16">
                 <TicketTab />
                 <div className="flex-col flex basis-1/2 mt-8">
-                    {bets.map((bet: BetsInterface, key) => (
+                    {bets!.map((bet: BetsInterface, key) => (
                         <BetTab
                             team1={bet.team1}
                             team2={bet.team2}
