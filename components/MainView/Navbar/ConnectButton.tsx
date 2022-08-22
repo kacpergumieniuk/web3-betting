@@ -1,17 +1,21 @@
 import React from 'react'
 import { useEthers, shortenAddress } from '@usedapp/core'
-import { utils } from 'ethers'
+import Link from 'next/link'
 
 const ConnectButton = () => {
     const { activateBrowserWallet, account } = useEthers()
 
     return (
-        <div
+        <button
             className="border border-white border-4 p-3 rounded-3xl font-bold text-white cursor-pointer hover:bg-white hover:text-violet-500 transition"
             onClick={activateBrowserWallet}
         >
-            {account ? shortenAddress(account) : 'Connect to Metamask'}
-        </div>
+            {account ? (
+                <Link href={`user/${account}`}>{shortenAddress(account)}</Link>
+            ) : (
+                'Connect to metamask'
+            )}
+        </button>
     )
 }
 

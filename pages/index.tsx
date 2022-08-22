@@ -22,6 +22,13 @@ const Home: NextPage = () => {
     }, [])
     return (
         <div className=" bg-zinc-200">
+            <Head>
+                <title>Web3 Betting</title>
+                <meta
+                    name="viewport"
+                    content="initial-scale=1.0, width=device-width"
+                />
+            </Head>
             <Navbar setCurrentTab={setCurrentTab} currentTab={currentTab} />
             <div className="flex pt-16">
                 <TicketTab />
