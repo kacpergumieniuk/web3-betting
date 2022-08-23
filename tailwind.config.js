@@ -6,6 +6,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      borderRadius:{
+        'mini': '0.3px'
+      },
      fontFamily: {
       'poppins': ['Poppins'],
       'inter': ['Inter']
