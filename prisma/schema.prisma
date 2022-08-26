@@ -17,4 +17,5 @@ model Bet {
   odds1 Int
   odds2 Int
   draw  Int
+  category String
 }

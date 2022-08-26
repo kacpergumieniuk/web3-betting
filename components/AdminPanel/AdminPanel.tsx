@@ -22,6 +22,7 @@ const AdminPanel = ({ onSubmit }: AddContactFormProps) => {
                         {...register('odds1', {
                             required: true,
                             valueAsNumber: true,
+                            minLength: 1,
                         })}
                     />
                     <input
@@ -29,6 +30,7 @@ const AdminPanel = ({ onSubmit }: AddContactFormProps) => {
                         {...register('odds2', {
                             required: true,
                             valueAsNumber: true,
+                            minLength: 1,
                         })}
                     />
                     <input
@@ -36,8 +38,10 @@ const AdminPanel = ({ onSubmit }: AddContactFormProps) => {
                         {...register('draw', {
                             required: true,
                             valueAsNumber: true,
+                            minLength: 1,
                         })}
                     />
+                    <input {...register('category', { required: true })} />
                     <button type="submit">Submit</button>
                 </form>
             </div>

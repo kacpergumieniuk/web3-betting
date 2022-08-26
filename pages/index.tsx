@@ -23,15 +23,25 @@ export const getStaticProps = async () => {
 const Home: NextPage = ({ initialBets }: any) => {
     const [currentTab, setCurrentTab] = useState<string>('bets')
     const [bets, setBets] = useState<Bet[]>(initialBets)
+    const [filteredBets, setFilteredBets] = useState<Bet[]>(bets)
     const [chosenBets, setChosenBets] = useState<Array<ChosenBetsInterface>>([])
+    const [currentCategory, setCurrentCategory] = useState<string>('all')
 
-    async function saveBet(bet: any) {
+    async function saveBet(bet: Bet) {
         const response = await fetch('/api/bets', {
             method: 'POST',
             body: JSON.stringify(bet),
         })
         return await response.json()
     }
+
+    useEffect(() => {
+        const arr = bets.filter((bet) => {
+            return bet.category === currentCategory
+        })
+        setFilteredBets(arr)
+    }, [currentCategory])
+
     return (
         <div className={`bg-background-color`}>
             <Head>
@@ -46,23 +56,42 @@ const Home: NextPage = ({ initialBets }: any) => {
                 href="https://use.typekit.net/gdr3vyw.css"
             ></link>
             <Navbar setCurrentTab={setCurrentTab} currentTab={currentTab} />
-            <Sidebar />
+            <Sidebar
+                setCurrentCategory={setCurrentCategory}
+                currentCategory={currentCategory}
+            />
             {currentTab === 'bets' && (
                 <div className="flex pt-16 bg-background-color">
                     <div className="flex-col flex basis-3/4 mt-8 pl-40">
-                        {bets!.map((bet: Bet, key: any) => (
-                            <BetTab
-                                team1={bet.team1}
-                                team2={bet.team2}
-                                odds1={bet.odds1}
-                                odds2={bet.odds2}
-                                draw={bet.draw}
-                                id={bet.id}
-                                setChosenBets={setChosenBets}
-                                key={key}
-                                chosenBets={chosenBets}
-                            />
-                        ))}
+                        {currentCategory != 'all'
+                            ? filteredBets!.map((bet: Bet, key: any) => (
+                                  <BetTab
+                                      team1={bet.team1}
+                                      team2={bet.team2}
+                                      odds1={bet.odds1}
+                                      odds2={bet.odds2}
+                                      draw={bet.draw}
+                                      category={bet.category}
+                                      id={bet.id}
+                                      setChosenBets={setChosenBets}
+                                      key={key}
+                                      chosenBets={chosenBets}
+                                  />
+                              ))
+                            : bets!.map((bet: Bet, key: any) => (
+                                  <BetTab
+                                      team1={bet.team1}
+                                      team2={bet.team2}
+                                      odds1={bet.odds1}
+                                      odds2={bet.odds2}
+                                      draw={bet.draw}
+                                      category={bet.category}
+                                      id={bet.id}
+                                      setChosenBets={setChosenBets}
+                                      key={key}
+                                      chosenBets={chosenBets}
+                                  />
+                              ))}
                     </div>
                     <TicketTab
                         chosenBets={chosenBets}

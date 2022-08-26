@@ -10,6 +10,7 @@ const BetTab = ({
     odds2,
     draw,
     id,
+    category,
     setChosenBets,
     chosenBets,
 }: BetTabInterface) => {
@@ -22,7 +23,10 @@ const BetTab = ({
     const [isTabChosen, setIsTabChosen] = useState<boolean>(false)
 
     return (
-        <div className="flex px-4 my-3 py-6 bg-primary rounded-lg justify-between items-center">
+        <div className="flex px-4 relative my-3 py-6 bg-primary rounded-lg justify-between items-center">
+            <p className="absolute top-0 left-2 capitalize text-sm text-gray-500">
+                {category}
+            </p>
             <p className="font-bold text-white">
                 {team1} - {team2}
             </p>
