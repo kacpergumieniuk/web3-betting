@@ -13,7 +13,7 @@ import AdminPanel from '../components/AdminPanel/AdminPanel'
 
 const prisma = new PrismaClient()
 
-export const getStaticProps = async () => {
+export const getServerSideProps = async () => {
     const res = await prisma.bet.findMany()
     return {
         props: { initialBets: res },
@@ -26,6 +26,7 @@ const Home: NextPage = ({ initialBets }: any) => {
     const [filteredBets, setFilteredBets] = useState<Bet[]>(bets)
     const [chosenBets, setChosenBets] = useState<Array<ChosenBetsInterface>>([])
     const [currentCategory, setCurrentCategory] = useState<string>('all')
+    const [userBalance, setUserBalance] = useState<number>(200)
 
     async function saveBet(bet: Bet) {
         const response = await fetch('/api/bets', {
@@ -55,7 +56,11 @@ const Home: NextPage = ({ initialBets }: any) => {
                 rel="stylesheet"
                 href="https://use.typekit.net/gdr3vyw.css"
             ></link>
-            <Navbar setCurrentTab={setCurrentTab} currentTab={currentTab} />
+            <Navbar
+                userBalance={userBalance}
+                setCurrentTab={setCurrentTab}
+                currentTab={currentTab}
+            />
             <Sidebar
                 setCurrentCategory={setCurrentCategory}
                 currentCategory={currentCategory}
@@ -96,6 +101,7 @@ const Home: NextPage = ({ initialBets }: any) => {
                     <TicketTab
                         chosenBets={chosenBets}
                         setChosenBets={setChosenBets}
+                        userBalance={userBalance}
                     />
                 </div>
             )}

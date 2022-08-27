@@ -1,13 +1,13 @@
 import { useEffect } from 'react'
 import ConnectButton from './ConnectButton'
 import { useEthers } from '@usedapp/core'
+import { NavbarInterface } from '../../../common/types'
 
-interface NavbarInterface {
-    setCurrentTab: (value: string) => void
-    currentTab: string
-}
-
-const Navbar = ({ setCurrentTab, currentTab }: NavbarInterface) => {
+const Navbar = ({
+    setCurrentTab,
+    currentTab,
+    userBalance,
+}: NavbarInterface) => {
     const { account } = useEthers()
 
     useEffect(() => {
@@ -46,7 +46,10 @@ const Navbar = ({ setCurrentTab, currentTab }: NavbarInterface) => {
                     </div>
                 )}
             </div>
-            <ConnectButton />
+            <div className="flex items-center font-bold gap-3">
+                {account && <p>Balance: {userBalance}zł</p>}
+                <ConnectButton />
+            </div>
         </div>
     )
 }

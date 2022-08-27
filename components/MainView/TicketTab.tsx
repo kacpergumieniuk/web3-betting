@@ -1,15 +1,42 @@
 import { useEffect, useState } from 'react'
 import { TicketTabInterface } from '../../common/types'
-
-const TicketTab = ({ chosenBets, setChosenBets }: TicketTabInterface) => {
+import { AiOutlineClose } from 'react-icons/ai'
+const TicketTab = ({
+    userBalance,
+    chosenBets,
+    setChosenBets,
+}: TicketTabInterface) => {
     const [totalCourse, setTotalCourse] = useState<number>(1)
-
+    const [errorMessage, setErrorMessage] = useState<string>('')
     const [stakeValue, setStakeValue] = useState<number>(0)
     const [estimatedWin, setEstimatedWin] = useState<number>(0)
 
+    const handleDeleteTab = (id: number) => {
+        const newChosenBets = chosenBets?.filter((bet: any) => {
+            return bet.id != id
+        })
+        setChosenBets!(newChosenBets)
+        console.log(id)
+    }
+
+    const handleInputChange = (e: any) => {
+        e.target.value === ''
+            ? setStakeValue(0)
+            : setStakeValue(parseInt(e.target.value))
+    }
+
+    const handleSubmit = () => {
+        if (userBalance < stakeValue) {
+            setErrorMessage("You don't have enough founds.")
+        } else {
+            setErrorMessage('')
+        }
+    }
+
     useEffect(() => {
         stakeValue > 0 && setEstimatedWin(stakeValue * totalCourse)
-    }, [stakeValue, chosenBets])
+        stakeValue === 0 && setEstimatedWin(0)
+    }, [stakeValue, chosenBets, totalCourse])
 
     useEffect(() => {
         setTotalCourse(1)
@@ -20,28 +47,21 @@ const TicketTab = ({ chosenBets, setChosenBets }: TicketTabInterface) => {
         })
     }, [chosenBets])
 
-    const handleDeleteTab = (id: number) => {
-        const newChosenBets = chosenBets?.filter((bet: any) => {
-            return bet.id != id
-        })
-        setChosenBets!(newChosenBets)
-        console.log(id)
-    }
     return (
         <div className="bg-primary basis-1/4 bg-white mx-20 static mb-4 mt-8 rounded-lg h-[calc(100vh-7rem)]">
             {chosenBets?.map((bet: any, key) => (
-                <div
-                    className="border rounded-md p-2 m-2"
-                    onClick={() => handleDeleteTab(bet.id)}
-                    key={key}
-                >
+                <div className="border relative rounded-md p-2 m-2" key={key}>
+                    <AiOutlineClose
+                        onClick={() => handleDeleteTab(bet.id)}
+                        className="text-white absolute right-2 cursor-pointer"
+                    />
                     <p className="text-xs font-bold text-gray-500">
                         {bet.team1} - {bet.team2}
                     </p>
-                    <p className="text-sm font-bold">
+                    <p className="text-sm font-bold text-white">
                         Wynik meczu: {bet.winner}
                     </p>
-                    <p>Kurs: {bet.odds}</p>
+                    <p className="text-white">Kurs: {bet.odds}</p>
                 </div>
             ))}
             {totalCourse > 1 && (
@@ -49,25 +69,34 @@ const TicketTab = ({ chosenBets, setChosenBets }: TicketTabInterface) => {
                     <div className="flex justify-between items-center px-3 flex-wrap mt-5 mb-2">
                         <p className="text-gray-500 font-bold text-sm">
                             Kurs{' '}
-                            <span className="text-black text-md p-2 bg-secondary font-bold rounded-lg">
+                            <span className="text-white text-md p-2 bg-background-color font-bold rounded-lg">
                                 {totalCourse.toFixed(2)}
                             </span>
                         </p>
                         <input
                             type="text"
                             className="rounded-md py-2 border border-black w-2/5 font-bold px-2"
-                            onChange={(e) =>
-                                setStakeValue(parseInt(e.target.value))
-                            }
+                            onChange={(e) => handleInputChange(e)}
                             value={stakeValue}
                         />
                     </div>
-                    <div className="flex justify-between items-center px-3">
-                        <p className="text-sm">Ewentualna wygrana:</p>
-                        <p className="text-secondary font-bold">
+                    <div className="flex justify-between items-center px-3 mb-3">
+                        <p className="text-sm text-white">
+                            Ewentualna wygrana:
+                        </p>
+                        <p className="text-white font-bold">
                             {estimatedWin.toFixed(2)} zł
                         </p>
                     </div>
+                    <div className="flex justify-center">
+                        <button
+                            className="p-2 mx-2 rounded-md font-bold w-full bg-white mb-3"
+                            onClick={handleSubmit}
+                        >
+                            Submit
+                        </button>
+                    </div>
+                    <p className="text-white text-center">{errorMessage}</p>
                 </>
             )}
         </div>

@@ -8,9 +8,16 @@ export interface ChosenBetsInterface {
     winner: string
 }
 
+export interface NavbarInterface {
+    setCurrentTab: (value: string) => void
+    currentTab: string
+    userBalance: number
+}
+
 export interface TicketTabInterface {
     chosenBets?: Array<ChosenBetsInterface>
     setChosenBets?: (value: any) => void
+    userBalance: number
 }
 
 export type BetTabInterface = Bet & {
