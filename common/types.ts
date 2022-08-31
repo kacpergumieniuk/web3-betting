@@ -29,3 +29,9 @@ export type Sidebar = {
     setCurrentCategory: (value: string) => void
     currentCategory: string
 }
+
+export type MainView = {
+    filteredBets: Bet[]
+    bets: Bet[]
+    currentCategory: string
+}

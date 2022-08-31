@@ -1,6 +1,8 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { TicketTabInterface } from '../../common/types'
 import { AiOutlineClose } from 'react-icons/ai'
+import autoAnimate from '@formkit/auto-animate'
+
 const TicketTab = ({
     userBalance,
     chosenBets,
@@ -10,6 +12,8 @@ const TicketTab = ({
     const [errorMessage, setErrorMessage] = useState<string>('')
     const [stakeValue, setStakeValue] = useState<number>(0)
     const [estimatedWin, setEstimatedWin] = useState<number>(0)
+
+    const parent = useRef(null)
 
     const handleDeleteTab = (id: number) => {
         const newChosenBets = chosenBets?.filter((bet: any) => {
@@ -47,10 +51,20 @@ const TicketTab = ({
         })
     }, [chosenBets])
 
+    useEffect(() => {
+        parent.current && autoAnimate(parent.current)
+    }, [parent])
+
     return (
-        <div className="bg-primary basis-1/4 bg-white mx-20 static mb-4 mt-8 rounded-lg h-[calc(100vh-7rem)]">
+        <div
+            ref={parent}
+            className="bg-primary bg-white mx-6 fixed mb-4 mt-8 rounded-lg w-1/5 right-0 h-[calc(100vh-7rem)]"
+        >
             {chosenBets?.map((bet: any, key) => (
-                <div className="border relative rounded-md p-2 m-2" key={key}>
+                <div
+                    className=" relative rounded-md p-2 m-2 bg-background-color"
+                    key={key}
+                >
                     <AiOutlineClose
                         onClick={() => handleDeleteTab(bet.id)}
                         className="text-white absolute right-2 cursor-pointer"

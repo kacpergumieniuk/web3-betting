@@ -16,7 +16,7 @@ const Navbar = ({
     }, [account])
 
     return (
-        <div className="w-[calc(100%-5rem)] h-20 bg-background-color text-white flex items-center px-6 justify-between absolute top-0 left-20 border-b border-text-color">
+        <div className="w-[calc(100%-5rem)] h-20 bg-background-color text-white flex items-center px-6 justify-between fixed top-0 left-20 border-b border-text-color z-10">
             <div className="flex h-full items-center">
                 <h1 className="text-2xl font-bold mr-16">web-3 bets</h1>
                 <div

@@ -1,6 +1,5 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import Image from 'next/image'
 import Navbar from '../components/MainView/Navbar/Navbar'
 import { useState, useEffect } from 'react'
 import BetTab from '../components/MainView/BetTab/BetTab'
@@ -10,6 +9,7 @@ import { ChosenBetsInterface } from '../common/types'
 import { Bet, PrismaClient } from '@prisma/client'
 import Sidebar from '../components/MainView/Sidebar/Sidebar'
 import AdminPanel from '../components/AdminPanel/AdminPanel'
+import MainView from '../components/MainView/MainView'
 
 const prisma = new PrismaClient()
 
@@ -66,44 +66,11 @@ const Home: NextPage = ({ initialBets }: any) => {
                 currentCategory={currentCategory}
             />
             {currentTab === 'bets' && (
-                <div className="flex pt-16 bg-background-color">
-                    <div className="flex-col flex basis-3/4 mt-8 pl-40">
-                        {currentCategory != 'all'
-                            ? filteredBets!.map((bet: Bet, key: any) => (
-                                  <BetTab
-                                      team1={bet.team1}
-                                      team2={bet.team2}
-                                      odds1={bet.odds1}
-                                      odds2={bet.odds2}
-                                      draw={bet.draw}
-                                      category={bet.category}
-                                      id={bet.id}
-                                      setChosenBets={setChosenBets}
-                                      key={key}
-                                      chosenBets={chosenBets}
-                                  />
-                              ))
-                            : bets!.map((bet: Bet, key: any) => (
-                                  <BetTab
-                                      team1={bet.team1}
-                                      team2={bet.team2}
-                                      odds1={bet.odds1}
-                                      odds2={bet.odds2}
-                                      draw={bet.draw}
-                                      category={bet.category}
-                                      id={bet.id}
-                                      setChosenBets={setChosenBets}
-                                      key={key}
-                                      chosenBets={chosenBets}
-                                  />
-                              ))}
-                    </div>
-                    <TicketTab
-                        chosenBets={chosenBets}
-                        setChosenBets={setChosenBets}
-                        userBalance={userBalance}
-                    />
-                </div>
+                <MainView
+                    filteredBets={filteredBets}
+                    bets={bets}
+                    currentCategory={currentCategory}
+                />
             )}
             {currentTab === 'admin' && (
                 <AdminPanel
