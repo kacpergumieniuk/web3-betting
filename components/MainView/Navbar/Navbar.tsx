@@ -16,9 +16,11 @@ const Navbar = ({
     }, [account])
 
     return (
-        <div className="w-[calc(100%-5rem)] h-20 bg-background-color text-white flex items-center px-6 justify-between fixed top-0 left-20 border-b border-text-color z-10">
+        <div className="w-full h-16 bg-background-color text-white flex items-center px-4 justify-between fixed top-0 left-0 border-b border-text-color z-10">
             <div className="flex h-full items-center">
-                <h1 className="text-2xl font-bold mr-16">web-3 bets</h1>
+                <h1 className="text-2xl font-light mr-16 tracking-widest	">
+                    WEB3BETS
+                </h1>
                 <div
                     className={`${
                         currentTab === 'bets' && `bg-primary`
@@ -27,14 +29,14 @@ const Navbar = ({
                 >
                     <p>Zakłady</p>
                 </div>
-                <div
+                {/* <div
                     className={`${
                         currentTab === 'offer' && `bg-primary`
                     } h-full  flex items-center w-32 text-text-color text-base justify-center uppercase font-bold transition hover:bg-primary cursor-pointer leading-base`}
                     onClick={() => setCurrentTab('offer')}
                 >
                     <p>Promocja</p>
-                </div>
+                </div> */}
                 {account! === '0xc88c968247fA896e03df9549F475b0E916AE8ac1' && (
                     <div
                         className={`${

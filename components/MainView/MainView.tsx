@@ -10,8 +10,8 @@ const MainView = ({ filteredBets, bets, currentCategory }: MainView) => {
     const [userBalance, setUserBalance] = useState<number>(200)
 
     return (
-        <div className="flex pt-16 bg-background-color  min-h-screen">
-            <div className="flex-col flex basis-3/5 mt-8 ml-60">
+        <div className="flex pt-16 min-h-screen justify-center mr-20 ml-16">
+            <div className="flex-col flex mt-8 w-8/12">
                 {currentCategory != 'all'
                     ? filteredBets!.map((bet: Bet, key: any) => (
                           <BetTab

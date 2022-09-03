@@ -23,6 +23,9 @@ module.exports = {
         'secondary-hover': '#EB9399',
         'text-color': '#9DA9BB'
       },
+      letterSpacing: {
+        'widest': '.25em',
+      }
     },
   },
   plugins: [],

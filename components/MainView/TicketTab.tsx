@@ -58,7 +58,7 @@ const TicketTab = ({
     return (
         <div
             ref={parent}
-            className="bg-primary bg-white mx-6 fixed mb-4 mt-8 rounded-lg w-1/5 right-0 h-[calc(100vh-7rem)]"
+            className="bg-primary bg-white mr-6 fixed mb-4 mt-8 rounded-lg w-2/12 right-0 h-[calc(100vh-7rem)] overflow-auto"
         >
             {chosenBets?.map((bet: any, key) => (
                 <div
