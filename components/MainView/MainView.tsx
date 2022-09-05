@@ -4,6 +4,7 @@ import { ChosenBetsInterface } from '../../common/types'
 import BetTab from '../../components/MainView/BetTab/BetTab'
 import TicketTab from '../../components/MainView/TicketTab'
 import { MainView } from '../../common/types'
+import FeaturedMatches from './FeaturedMatches'
 
 const MainView = ({ filteredBets, bets, currentCategory }: MainView) => {
     const [chosenBets, setChosenBets] = useState<Array<ChosenBetsInterface>>([])
@@ -12,6 +13,7 @@ const MainView = ({ filteredBets, bets, currentCategory }: MainView) => {
     return (
         <div className="flex pt-16 min-h-screen justify-center mr-20 ml-16">
             <div className="flex-col flex mt-8 w-8/12">
+                <FeaturedMatches bets={bets} />
                 {currentCategory != 'all'
                     ? filteredBets!.map((bet: Bet, key: any) => (
                           <BetTab

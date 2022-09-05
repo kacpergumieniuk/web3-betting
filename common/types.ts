@@ -35,3 +35,7 @@ export type MainView = {
     bets: Bet[]
     currentCategory: string
 }
+
+export type FeaturedMatches = {
+    bets: Bet[]
+}
