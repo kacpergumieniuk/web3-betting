@@ -38,4 +38,10 @@ export type MainView = {
 
 export type FeaturedMatches = {
     bets: Bet[]
+    setChosenBets: (value: any) => void
+    chosenBets: Array<ChosenBetsInterface>
+}
+
+export type ConnectButton = {
+    setCurrentTab: (value: string) => void
 }

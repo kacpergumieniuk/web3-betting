@@ -13,7 +13,11 @@ const MainView = ({ filteredBets, bets, currentCategory }: MainView) => {
     return (
         <div className="flex pt-16 min-h-screen justify-center mr-20 ml-16">
             <div className="flex-col flex mt-8 w-8/12">
-                <FeaturedMatches bets={bets} />
+                <FeaturedMatches
+                    bets={bets}
+                    setChosenBets={setChosenBets}
+                    chosenBets={chosenBets}
+                />
                 {currentCategory != 'all'
                     ? filteredBets!.map((bet: Bet, key: any) => (
                           <BetTab
