@@ -11,6 +11,7 @@ import Sidebar from '../components/MainView/Sidebar/Sidebar'
 import AdminPanel from '../components/AdminPanel/AdminPanel'
 import MainView from '../components/MainView/MainView'
 import UserPanel from '../components/UserPanel/UserPanel'
+import { trpc } from '../utils/trpc'
 
 const prisma = new PrismaClient()
 
@@ -41,7 +42,10 @@ const Home: NextPage = ({ initialBets }: any) => {
             return bet.category === currentCategory
         })
         setFilteredBets(arr)
+        console.log(hello.data)
     }, [currentCategory])
+
+    const hello = trpc.useQuery(['hello', { text: 'bombi' }])
 
     return (
         <div className={`bg-background-color`}>

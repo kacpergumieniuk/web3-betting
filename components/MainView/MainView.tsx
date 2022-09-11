@@ -33,7 +33,8 @@ const MainView = ({ filteredBets, bets, currentCategory }: MainView) => {
                               chosenBets={chosenBets}
                           />
                       ))
-                    : bets!.map((bet: Bet, key: any) => (
+                    : bets &&
+                      bets!.map((bet: Bet, key: any) => (
                           <BetTab
                               team1={bet.team1}
                               team2={bet.team2}
