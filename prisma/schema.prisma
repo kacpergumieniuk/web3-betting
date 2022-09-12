@@ -16,6 +16,29 @@ model Bet {
   team2 String
   odds1 Int
   odds2 Int
-  draw  Int
+  draw  Int // kurs dla remisu
   category String
+  result String // Do rozegrania, Remis, Wygrana 1, Wygrana 2
+  matchOnCoupon MatchOnCoupon[]
+
+}
+
+model Coupon {
+  id         String       @id @default(cuid())
+  user       String // adres portfel w Blockchain
+  amount     Decimal
+  state      String // Obstawiony, Przegrany, Wygrany, Wygrany Wypłacony, Anulowany
+  matchOnCoupon MatchOnCoupon[]
+}
+
+model MatchOnCoupon {
+  coupon   Coupon  @relation(fields: [couponId], references: [id])
+  couponId String
+
+  bet   Bet    @relation(fields: [betId], references: [id])
+  betId String
+
+  betResult String // Obstawiony wynik: Remis, Wygrana 1, Wygrana 2
+
+  @@id([couponId, betId])
 }
