@@ -12,6 +12,7 @@ const TicketTab = ({
     const [totalCourse, setTotalCourse] = useState<number>(1)
     const [errorMessage, setErrorMessage] = useState<string>('')
     const [stakeValue, setStakeValue] = useState<number>(0)
+    const [resultValue, setResultValue] = useState<string>('')
     const [estimatedWin, setEstimatedWin] = useState<number>(0)
 
     const parent = useRef(null)
@@ -76,6 +77,41 @@ const TicketTab = ({
         })
 
         return await response.json()
+    }
+
+    const handleInputChangeResult = (e: any) => {
+        console.log('resultValue e: ', e)
+
+        e.target.value === ''
+            ? setResultValue('')
+            : setResultValue((e.target.value))
+        console.log('resultValue', resultValue)
+    }
+
+    const handleSubmitBetResult = () => {
+        console.log('Przycisk Change Bet Result')
+        console.log('Przycisk Submit Change Bet Result, chosenBets: ', chosenBets)
+        console.log('Przycisk Submit Change Bet Result, resultValue: ', resultValue)
+
+
+        updateBetsResult(resultValue, chosenBets);
+
+
+    }
+
+    async function updateBetsResult(resultValue: string, chosenBets: ChosenBetsInterface[] | undefined) {
+        const betsToUpdate = chosenBets?.map( chosenBet =>  chosenBet.id);
+
+        console.log('Przycisk Submit Change Bet Result, resultValue: ', resultValue)
+
+        console.log('betsToUpdate: ', betsToUpdate)
+        const updateData  = JSON.stringify({data: {result: resultValue}, betsToUpdate});
+        const response = await fetch('/api/bets', {
+            method: 'PATCH',
+            body: updateData
+        })
+
+        return await response.json();
     }
 
     useEffect(() => {
@@ -149,6 +185,29 @@ const TicketTab = ({
                             onClick={handleSubmit}
                         >
                             Submit
+                        </button>
+                    </div>
+                    <div>
+                        <select
+                            name="betResult"
+                            // className="rounded-md py-2 border border-black w-2/5 font-bold px-2"
+                            value={resultValue}
+                            onChange={(e) => handleInputChangeResult(e)}
+
+
+                        >
+                            <option>Remis</option>
+                            <option>Wygrana 1</option>
+                            <option>Wygrana 2</option>
+                        </select>
+
+                    </div>
+                    <div className="flex justify-center">
+                        <button
+                            className="p-2 mx-2 rounded-md font-bold w-full bg-white mb-3"
+                            onClick={handleSubmitBetResult}
+                        >
+                            Change Bet results
                         </button>
                     </div>
                     <p className="text-white text-center">{errorMessage}</p>
