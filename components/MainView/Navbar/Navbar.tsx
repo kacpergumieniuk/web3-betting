@@ -37,7 +37,7 @@ const Navbar = ({
                 >
                     <p>Promocja</p>
                 </div> */}
-                {account! === '0xc88c968247fA896e03df9549F475b0E916AE8ac1' && (
+                {/*{account! === '0xc88c968247fA896e03df9549F475b0E916AE8ac1' && (*/}
                     <div
                         className={`${
                             currentTab === 'admin' && `bg-primary`
@@ -46,7 +46,7 @@ const Navbar = ({
                     >
                         <p>Admin</p>
                     </div>
-                )}
+                {/*)}*/}
             </div>
             <div className="flex items-center font-bold gap-3">
                 {account && <p>Balance: {userBalance}zł</p>}
