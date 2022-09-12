@@ -76,7 +76,7 @@ const TicketTab = ({
             body: JSON.stringify(coupon),
         })
 
-        return await response.json()
+        //return await response.json()  //TODO: Rzuca błąd
     }
 
     const handleInputChangeResult = (e: any) => {
@@ -94,19 +94,19 @@ const TicketTab = ({
         console.log('Przycisk Submit Change Bet Result, resultValue: ', resultValue)
 
 
-        updateBetsResult(resultValue, chosenBets);
+        updateBetsResultAndResolveCoupons(resultValue, chosenBets);
 
 
     }
 
-    async function updateBetsResult(resultValue: string, chosenBets: ChosenBetsInterface[] | undefined) {
+    async function updateBetsResultAndResolveCoupons(resultValue: string, chosenBets: ChosenBetsInterface[] | undefined) {
         const betsToUpdate = chosenBets?.map( chosenBet =>  chosenBet.id);
 
         console.log('Przycisk Submit Change Bet Result, resultValue: ', resultValue)
 
         console.log('betsToUpdate: ', betsToUpdate)
         const updateData  = JSON.stringify({data: {result: resultValue}, betsToUpdate});
-        const response = await fetch('/api/bets', {
+        const response = await fetch('/api/bets', { //TODO: przydałby się inny Endpoint, np api/bets/resolve
             method: 'PATCH',
             body: updateData
         })
