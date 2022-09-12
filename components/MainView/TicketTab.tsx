@@ -1,7 +1,8 @@
 import { useEffect, useState, useRef } from 'react'
-import { TicketTabInterface } from '../../common/types'
+import {ChosenBetsInterface, TicketTabInterface} from '../../common/types'
 import { AiOutlineClose } from 'react-icons/ai'
 import autoAnimate from '@formkit/auto-animate'
+import { Prisma } from '@prisma/client'
 
 const TicketTab = ({
     userBalance,
@@ -35,6 +36,46 @@ const TicketTab = ({
         } else {
             setErrorMessage('')
         }
+        createNewCoupon('Test User String', stakeValue, chosenBets)   //TODO: Statyczny User
+    }
+
+    function groupChosenBets(chosenBets: ChosenBetsInterface[] | undefined) {
+        let matchesOnCoupon: Prisma.MatchOnCouponUncheckedCreateWithoutCouponInput[] = [];
+        if (chosenBets) {
+            for (const chosenBet of chosenBets) {
+                const matchOnCoupon: Prisma.MatchOnCouponUncheckedCreateWithoutCouponInput = {
+                    betResult: chosenBet.winner,
+                    betId: chosenBet.id
+                }
+                matchesOnCoupon = [...matchesOnCoupon, matchOnCoupon];
+            }
+        }
+        // const matchesOnCoupon2 = chosenBets?.map((chosenBet) => (({betResult: chosenBet.winner, betId: chosenBet.id}))); //TODO Nie umiem tego zatypować dla TypeScriptu
+        return matchesOnCoupon;
+    }
+
+    async function createNewCoupon(user: string, amount: number, chosenBets: ChosenBetsInterface[] | undefined) {
+        let matchesOnCoupon = groupChosenBets(chosenBets);
+
+
+        const coupon : Prisma.CouponCreateInput = {
+            user: user,
+            amount : amount,
+            state : 'Obstawiony',
+            matchOnCoupon: {
+                create: matchesOnCoupon
+            }
+        };
+
+        console.log('createNewCoupon, coupon: ' , coupon);
+
+        //TODO Zamień z RESTa na tRCP
+        const response = await fetch('/api/coupon', {
+            method: 'POST',
+            body: JSON.stringify(coupon),
+        })
+
+        return await response.json()
     }
 
     useEffect(() => {
