@@ -45,6 +45,7 @@ const AdminPanel = ({ onSubmit }: AddContactFormProps) => {
                         })}
                     />
                     <input placeholder='Category' {...register('category', { required: true })} />
+                    <input type="hidden" value="Waiting for Result"{...register('result')} />
                     <button type="submit">Submit</button>
                 </form>
             </div>
