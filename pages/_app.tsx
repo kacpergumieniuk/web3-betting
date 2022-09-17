@@ -1,15 +1,15 @@
 import '../styles/globals.css'
 import type { AppProps } from 'next/app'
-import { DAppProvider, Rinkeby, Config } from '@usedapp/core'
+import { DAppProvider, Rinkeby, Config, Ropsten } from '@usedapp/core'
 import { getDefaultProvider } from 'ethers'
 import { withTRPC } from '@trpc/next'
 import { AppType } from 'next/dist/shared/lib/utils'
 import { AppRouter } from './api/trpc/[trpc]'
 
 const config: Config = {
-    readOnlyChainId: Rinkeby.chainId,
+    readOnlyChainId: Ropsten.chainId,
     readOnlyUrls: {
-        [Rinkeby.chainId]: getDefaultProvider('rinkeby'),
+        [Ropsten.chainId]: getDefaultProvider('ropsten'),
     },
 }
 

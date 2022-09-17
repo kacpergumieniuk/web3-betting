@@ -1,7 +1,8 @@
 import { useEffect } from 'react'
 import ConnectButton from './ConnectButton'
-import { useEthers } from '@usedapp/core'
+import { useEtherBalance, useEthers } from '@usedapp/core'
 import { NavbarInterface } from '../../../common/types'
+import { formatEther } from '@ethersproject/units'
 
 const Navbar = ({
     setCurrentTab,
@@ -9,6 +10,7 @@ const Navbar = ({
     userBalance,
 }: NavbarInterface) => {
     const { account } = useEthers()
+    const etherBalance = useEtherBalance(account)
 
     useEffect(() => {
         account != '0xc88c968247fA896e03df9549F475b0E916AE8ac1' &&
@@ -49,7 +51,12 @@ const Navbar = ({
                 )}
             </div>
             <div className="flex items-center font-bold gap-3">
-                {account && <p>Balance: {userBalance}zł</p>}
+                {account && (
+                    <p>
+                        Balance: {etherBalance && formatEther(etherBalance!)}
+                        ETH
+                    </p>
+                )}
                 <ConnectButton setCurrentTab={setCurrentTab} />
             </div>
         </div>

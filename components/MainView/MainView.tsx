@@ -5,10 +5,14 @@ import BetTab from '../../components/MainView/BetTab/BetTab'
 import TicketTab from '../../components/MainView/TicketTab'
 import { MainView } from '../../common/types'
 import FeaturedMatches from './FeaturedMatches'
+import { useAllMatches } from '../../hooks/useAllMatches'
+import { contract } from '../../utils/constants'
+import { useEthers } from '@usedapp/core'
 
 const MainView = ({ filteredBets, bets, currentCategory }: MainView) => {
     const [chosenBets, setChosenBets] = useState<Array<ChosenBetsInterface>>([])
     const [userBalance, setUserBalance] = useState<number>(200)
+    /* const matchesData = useAllMatches(contract) */
 
     return (
         <div className="flex pt-16 min-h-screen justify-center mr-20 ml-16">
