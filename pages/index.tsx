@@ -42,10 +42,7 @@ const Home: NextPage = ({ initialBets }: any) => {
             return bet.category === currentCategory
         })
         setFilteredBets(arr)
-        console.log(hello.data)
     }, [currentCategory])
-
-    const hello = trpc.useQuery(['hello', { text: 'bombi' }])
 
     return (
         <div className={`bg-background-color`}>

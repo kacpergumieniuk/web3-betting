@@ -23,14 +23,25 @@ const BetTab = ({
     const [isTabChosen, setIsTabChosen] = useState<boolean>(false)
 
     return (
-        <div className="flex px-4 relative my-3 py-6 bg-primary rounded-lg justify-between items-center">
-            <p className="absolute top-0 left-2 capitalize text-sm text-gray-500">
+        <div className="flex relative my-3 py-6 rounded-lg justify-between items-center">
+            <p className="absolute top-0 left-0 capitalize text-xs text-gray-400 ">
                 {category}
             </p>
-            <p className="font-bold text-white">
-                {team1} - {team2}
-            </p>
-            <div className="flex">
+            <div className="flex items-center gap-2 w-1/6">
+                <div className="text-xs text-white text-center bg-primary p-2">
+                    <p>18:30</p>
+                    <p>Dzisiaj</p>
+                </div>
+                <div className="text-center text-white text-xs leading-3 w-12">
+                    <p className="text-gray-400">{team1}</p>
+                    <p>vs</p>
+                    <p className="text-gray-400">{team2}</p>
+                </div>
+            </div>
+            <div className="flex w-5/6 gap-3 relative">
+                <p className="absolute text-xs text-gray-400 -top-[27px] left-[8px]">
+                    Match result
+                </p>
                 <BetTabButton
                     team1={team1}
                     team2={team2}
