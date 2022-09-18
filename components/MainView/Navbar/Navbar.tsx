@@ -20,7 +20,10 @@ const Navbar = ({
     return (
         <div className="w-full h-16 bg-background-color text-white flex items-center px-4 justify-between fixed top-0 left-0 border-b border-text-color z-10">
             <div className="flex h-full items-center">
-                <h1 className="text-2xl font-light mr-16 tracking-widest cursor-pointer">
+                <h1
+                    className="text-2xl font-light mr-16 tracking-widest cursor-pointer"
+                    onClick={() => setCurrentTab('bets')}
+                >
                     WEB3BETS
                 </h1>
                 <div
@@ -53,7 +56,7 @@ const Navbar = ({
             <div className="flex items-center font-bold gap-3">
                 {account && (
                     <p>
-                        Balance: {etherBalance && formatEther(etherBalance!)}
+                        Balance: {etherBalance && formatEther(etherBalance!)}{' '}
                         ETH
                     </p>
                 )}

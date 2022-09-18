@@ -12,11 +12,14 @@ import { useEthers } from '@usedapp/core'
 const MainView = ({ filteredBets, bets, currentCategory }: MainView) => {
     const [chosenBets, setChosenBets] = useState<Array<ChosenBetsInterface>>([])
     const [userBalance, setUserBalance] = useState<number>(200)
-    /* const matchesData = useAllMatches(contract) */
+    const matchesData = useAllMatches(contract)
 
     return (
         <div className="flex pt-16 min-h-screen justify-center mr-20 ml-16">
-            <div className="flex-col flex mt-8 w-8/12">
+            <div
+                className="flex-col flex mt-8 w-8/12"
+                onClick={() => console.log(matchesData)}
+            >
                 <FeaturedMatches
                     bets={bets}
                     setChosenBets={setChosenBets}
