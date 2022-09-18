@@ -15,10 +15,11 @@ const AdminPanel = ({ onSubmit }: AddContactFormProps) => {
                     onSubmit={handleSubmit(onSubmit)}
                     className="flex flex-col gap-4 text-black"
                 >
-                    <input {...register('team1', { required: true })} />
-                    <input {...register('team2', { required: true })} />
+                    <input placeholder = "Team1" {...register('team1', { required: true })} />
+                    <input placeholder = "Team2" {...register('team2', { required: true })} />
                     <input
                         type="number"
+                        placeholder = "Odds1"
                         {...register('odds1', {
                             required: true,
                             valueAsNumber: true,
@@ -27,6 +28,7 @@ const AdminPanel = ({ onSubmit }: AddContactFormProps) => {
                     />
                     <input
                         type="number"
+                        placeholder = "Odds2"
                         {...register('odds2', {
                             required: true,
                             valueAsNumber: true,
@@ -35,13 +37,15 @@ const AdminPanel = ({ onSubmit }: AddContactFormProps) => {
                     />
                     <input
                         type="number"
+                        placeholder = "Draw"
                         {...register('draw', {
                             required: true,
                             valueAsNumber: true,
                             minLength: 1,
                         })}
                     />
-                    <input {...register('category', { required: true })} />
+                    <input placeholder='Category' {...register('category', { required: true })} />
+                    <input type="hidden" value="Waiting for Result"{...register('result')} />
                     <button type="submit">Submit</button>
                 </form>
             </div>

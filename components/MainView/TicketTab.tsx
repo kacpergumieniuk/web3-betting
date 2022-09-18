@@ -1,7 +1,8 @@
 import { useEffect, useState, useRef } from 'react'
-import { TicketTabInterface } from '../../common/types'
+import {ChosenBetsInterface, TicketTabInterface} from '../../common/types'
 import { AiOutlineClose } from 'react-icons/ai'
 import autoAnimate from '@formkit/auto-animate'
+import { Prisma } from '@prisma/client'
 
 const TicketTab = ({
     userBalance,
@@ -11,6 +12,7 @@ const TicketTab = ({
     const [totalCourse, setTotalCourse] = useState<number>(1)
     const [errorMessage, setErrorMessage] = useState<string>('')
     const [stakeValue, setStakeValue] = useState<number>(0)
+    const [resultValue, setResultValue] = useState<string>('')
     const [estimatedWin, setEstimatedWin] = useState<number>(0)
 
     const parent = useRef(null)
@@ -35,6 +37,81 @@ const TicketTab = ({
         } else {
             setErrorMessage('')
         }
+        createNewCoupon('Test User String', stakeValue, chosenBets)   //TODO: Statyczny User
+    }
+
+    function groupChosenBets(chosenBets: ChosenBetsInterface[] | undefined) {
+        let matchesOnCoupon: Prisma.MatchOnCouponUncheckedCreateWithoutCouponInput[] = [];
+        if (chosenBets) {
+            for (const chosenBet of chosenBets) {
+                const matchOnCoupon: Prisma.MatchOnCouponUncheckedCreateWithoutCouponInput = {
+                    betResult: chosenBet.winner,
+                    betId: chosenBet.id
+                }
+                matchesOnCoupon = [...matchesOnCoupon, matchOnCoupon];
+            }
+        }
+        // const matchesOnCoupon2 = chosenBets?.map((chosenBet) => (({betResult: chosenBet.winner, betId: chosenBet.id}))); //TODO Nie umiem tego zatypować dla TypeScriptu
+        return matchesOnCoupon;
+    }
+
+    async function createNewCoupon(user: string, amount: number, chosenBets: ChosenBetsInterface[] | undefined) {
+        let matchesOnCoupon = groupChosenBets(chosenBets);
+
+
+        const coupon : Prisma.CouponCreateInput = {
+            user: user,
+            amount : amount,
+            state : 'Obstawiony',
+            matchOnCoupon: {
+                create: matchesOnCoupon
+            }
+        };
+
+        console.log('createNewCoupon, coupon: ' , coupon);
+
+        //TODO Zamień z RESTa na tRCP
+        const response = await fetch('/api/coupon', {
+            method: 'POST',
+            body: JSON.stringify(coupon),
+        })
+
+        //return await response.json()  //TODO: Rzuca błąd
+    }
+
+    const handleInputChangeResult = (e: any) => {
+        console.log('resultValue e: ', e)
+
+        e.target.value === ''
+            ? setResultValue('')
+            : setResultValue((e.target.value))
+        console.log('resultValue', resultValue)
+    }
+
+    const handleSubmitBetResult = () => {
+        console.log('Przycisk Change Bet Result')
+        console.log('Przycisk Submit Change Bet Result, chosenBets: ', chosenBets)
+        console.log('Przycisk Submit Change Bet Result, resultValue: ', resultValue)
+
+
+        updateBetsResultAndResolveCoupons(resultValue, chosenBets);
+
+
+    }
+
+    async function updateBetsResultAndResolveCoupons(resultValue: string, chosenBets: ChosenBetsInterface[] | undefined) {
+        const betsToUpdate = chosenBets?.map( chosenBet =>  chosenBet.id);
+
+        console.log('Przycisk Submit Change Bet Result, resultValue: ', resultValue)
+
+        console.log('betsToUpdate: ', betsToUpdate)
+        const updateData  = JSON.stringify({data: {result: resultValue}, betsToUpdate});
+        const response = await fetch('/api/bets', { //TODO: przydałby się inny Endpoint, np api/bets/resolve
+            method: 'PATCH',
+            body: updateData
+        })
+
+        return await response.json();
     }
 
     useEffect(() => {
@@ -108,6 +185,29 @@ const TicketTab = ({
                             onClick={handleSubmit}
                         >
                             Submit
+                        </button>
+                    </div>
+                    <div>
+                        <select
+                            name="betResult"
+                            // className="rounded-md py-2 border border-black w-2/5 font-bold px-2"
+                            value={resultValue}
+                            onChange={(e) => handleInputChangeResult(e)}
+
+
+                        >
+                            <option>Remis</option>
+                            <option>Wygrana 1</option>
+                            <option>Wygrana 2</option>
+                        </select>
+
+                    </div>
+                    <div className="flex justify-center">
+                        <button
+                            className="p-2 mx-2 rounded-md font-bold w-full bg-white mb-3"
+                            onClick={handleSubmitBetResult}
+                        >
+                            Change Bet results
                         </button>
                     </div>
                     <p className="text-white text-center">{errorMessage}</p>

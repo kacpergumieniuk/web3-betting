@@ -31,10 +31,11 @@ const MainView = ({ filteredBets, bets, currentCategory }: MainView) => {
                               odds2={bet.odds2}
                               draw={bet.draw}
                               category={bet.category}
-                              id={bet.id}
+                              id={bet.id}   // TODO: Id sie nie zaciąga, trzeba odświeżyć stronke
                               setChosenBets={setChosenBets}
                               key={key}
                               chosenBets={chosenBets}
+                              result={bet.result}
                           />
                       ))
                     : bets &&
@@ -50,6 +51,7 @@ const MainView = ({ filteredBets, bets, currentCategory }: MainView) => {
                               setChosenBets={setChosenBets}
                               key={key}
                               chosenBets={chosenBets}
+                              result={bet.result}
                           />
                       ))}
             </div>
