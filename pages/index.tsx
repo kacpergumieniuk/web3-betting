@@ -10,6 +10,8 @@ import { Bet, PrismaClient } from '@prisma/client'
 import Sidebar from '../components/MainView/Sidebar/Sidebar'
 import AdminPanel from '../components/AdminPanel/AdminPanel'
 import MainView from '../components/MainView/MainView'
+import UserPanel from '../components/UserPanel/UserPanel'
+import { trpc } from '../utils/trpc'
 
 const prisma = new PrismaClient()
 
@@ -24,7 +26,6 @@ const Home: NextPage = ({ initialBets }: any) => {
     const [currentTab, setCurrentTab] = useState<string>('bets')
     const [bets, setBets] = useState<Bet[]>(initialBets)
     const [filteredBets, setFilteredBets] = useState<Bet[]>(bets)
-    const [chosenBets, setChosenBets] = useState<Array<ChosenBetsInterface>>([])
     const [currentCategory, setCurrentCategory] = useState<string>('all')
     const [userBalance, setUserBalance] = useState<number>(200)
 
@@ -61,10 +62,13 @@ const Home: NextPage = ({ initialBets }: any) => {
                 setCurrentTab={setCurrentTab}
                 currentTab={currentTab}
             />
-            <Sidebar
-                setCurrentCategory={setCurrentCategory}
-                currentCategory={currentCategory}
-            />
+            {currentTab === 'bets' && (
+                <Sidebar
+                    setCurrentCategory={setCurrentCategory}
+                    currentCategory={currentCategory}
+                />
+            )}
+
             {currentTab === 'bets' && (
                 <MainView
                     filteredBets={filteredBets}
@@ -85,6 +89,7 @@ const Home: NextPage = ({ initialBets }: any) => {
                     }}
                 />
             )}
+            {currentTab === 'user' && <UserPanel />}
         </div>
     )
 }

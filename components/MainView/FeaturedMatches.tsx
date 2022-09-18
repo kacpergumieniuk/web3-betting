@@ -1,16 +1,29 @@
 import React, { useEffect, useState } from 'react'
 import { FeaturedMatches } from '../../common/types'
 import { Bet } from '@prisma/client'
+import BetTabButton from './BetTab/BetTabButton'
 
-const FeaturedMatches = ({ bets }: FeaturedMatches) => {
+const FeaturedMatches = ({
+    bets,
+    setChosenBets,
+    chosenBets,
+}: FeaturedMatches) => {
     const [featuredBets, setFeaturedBets] = useState<Bet[]>([])
     const [currentChosenFeaturedBet, setCurrentChosenFeaturedBet] =
         useState<number>(0)
+    const [isTabChosen, setIsTabChosen] = useState<boolean>(false)
 
     useEffect(() => {
         bets.length && setFeaturedBets(bets.slice(0, 5))
-        console.log('lol')
     }, [])
+
+    useEffect(() => {
+        chosenBets.filter(
+            (bet) => bet.id === featuredBets[currentChosenFeaturedBet].id
+        ).length > 0
+            ? setIsTabChosen(true)
+            : setIsTabChosen(false)
+    }, [chosenBets, currentChosenFeaturedBet])
 
     /* const handleNextFeaturedBet = () => {
         currentChosenFeaturedBet === 4
@@ -32,33 +45,43 @@ const FeaturedMatches = ({ bets }: FeaturedMatches) => {
                         featuredBets[currentChosenFeaturedBet].team2}
                 </p>
                 <div className="flex gap-3">
-                    <div className="border w-14 cursor-pointer flex items-center justify-center">
-                        <p>
-                            <span className="text-xs mr-1 text-gray-400">
-                                1.
-                            </span>
-                            {featuredBets.length &&
-                                featuredBets[currentChosenFeaturedBet].odds1}
-                        </p>
-                    </div>
-                    <div className="border w-14 cursor-pointer flex items-center justify-center">
-                        <p>
-                            <span className="text-xs mr-1 text-gray-400">
-                                x
-                            </span>
-                            {featuredBets.length &&
-                                featuredBets[currentChosenFeaturedBet].draw}
-                        </p>
-                    </div>
-                    <div className="border w-14 cursor-pointer flex items-center justify-center h-11">
-                        <p>
-                            <span className="text-xs mr-1 text-gray-400">
-                                2.
-                            </span>
-                            {featuredBets.length &&
-                                featuredBets[currentChosenFeaturedBet].odds2}
-                        </p>
-                    </div>
+                    {featuredBets.length && (
+                        <BetTabButton
+                            team1={featuredBets[currentChosenFeaturedBet].team1}
+                            team2={featuredBets[currentChosenFeaturedBet].team2}
+                            id={featuredBets[currentChosenFeaturedBet].id}
+                            odds={featuredBets[currentChosenFeaturedBet].odds1}
+                            setChosenBets={setChosenBets}
+                            winner={
+                                featuredBets[currentChosenFeaturedBet].team1
+                            }
+                            disabled={isTabChosen}
+                        />
+                    )}
+                    {featuredBets.length && (
+                        <BetTabButton
+                            team1={featuredBets[currentChosenFeaturedBet].team1}
+                            team2={featuredBets[currentChosenFeaturedBet].team2}
+                            id={featuredBets[currentChosenFeaturedBet].id}
+                            odds={featuredBets[currentChosenFeaturedBet].draw}
+                            setChosenBets={setChosenBets}
+                            winner={'Remis'}
+                            disabled={isTabChosen}
+                        />
+                    )}
+                    {featuredBets.length && (
+                        <BetTabButton
+                            team1={featuredBets[currentChosenFeaturedBet].team1}
+                            team2={featuredBets[currentChosenFeaturedBet].team2}
+                            id={featuredBets[currentChosenFeaturedBet].id}
+                            odds={featuredBets[currentChosenFeaturedBet].odds2}
+                            setChosenBets={setChosenBets}
+                            winner={
+                                featuredBets[currentChosenFeaturedBet].team2
+                            }
+                            disabled={isTabChosen}
+                        />
+                    )}
                 </div>
             </div>
             <div className="absolute right-8 bottom-8 flex gap-2">

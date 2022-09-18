@@ -1,5 +1,5 @@
 import React from 'react'
-
+import { Bet } from '@prisma/client'
 interface BetTabButtonInterface {
     setChosenBets: (value: any) => void
     type?: string
@@ -25,14 +25,14 @@ const BetTabButton = ({
         <>
             {type != 'draw' && (
                 <div
-                    className={` mx-2 text-center w-20 py-2 rounded-lg  transition flex flex-col justify-between text-standard ${
+                    className={` mx-2 text-center w-1/3 p-4 transition flex justify-between text-standard ${
                         disabled
                             ? 'bg-gray-400 cursor-not-allowed'
-                            : 'bg-background-color text-white cursor-pointer'
+                            : 'bg-primary text-white cursor-pointer'
                     }`}
                     onClick={() =>
                         !disabled &&
-                        setChosenBets((prev: any) => [
+                        setChosenBets((prev: Bet[]) => [
                             ...prev,
                             {
                                 team1: team1,
